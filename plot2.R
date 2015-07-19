@@ -29,14 +29,16 @@ plot2 <- function () {
         hpcons[, 2] <- seq(as.POSIXlt(timeTemp[1]), length = 4000, by = 60)
         
         ## Take information only from Feb. 1st and 2nd, 2007
+        sub_hpcons <- subset(hpcons,subset=(hpcons[, 2]>='2007-02-01' & hpcons[, 2]< '2007-02-03'))
         
+        ## Open PNG file: 480 x 480 pixels by default 
+        png(filename = "plot2.png", bg = "transparent")
         
         ## Create Graph
-        gapower <- transform(hpcons, Day = factor(Day))
-        with(gapower, lines())
-        lines(variable ~ day, gapower, xlab = "Day", ylab = "Global Active Power (kilowatts)")
-        
-        ## Create PNG file: 480 x 480 pixels
-        dev.copy(png, file = "plot2.png", width = 480, height = 480)
+        gapower <- transform(sub_hpcons, Date = factor(Date))
+        plot(gapower$Time, gapower$Global_active_power, type="l", 
+             ylab=" Global Active Power (kilowatts)", xlab=" ")
+             
+        ## Close PNG file
         dev.off()
 }

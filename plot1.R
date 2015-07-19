@@ -29,13 +29,15 @@ plot1 <- function () {
         hpcons[, 2] <- seq(as.POSIXlt(timeTemp[1]), length = 4000, by = 60)
         
         ## Take information only from Feb. 1st and 2nd, 2007
+        sub_hpcons <- subset(hpcons,subset=(hpcons[, 2]>='2007-02-01' & hpcons[, 2]< '2007-02-03'))
         
+        ## Open PNG file: 480 x 480 pixels by default 
+        png(filename = "plot1.png", bg = "transparent")
         
         ## Create Graph
-        hist(hpcons, col = "red", breakes = 12, main = "Global Active Power", 
+        hist(sub_hpcons$Global_active_power, col = "red", bg = "transparent", main = "Global Active Power", 
              xlab = " Global Active Power (kilowatts)")
         
-        ## Create PNG file: 480 x 480 pixels
-        dev.copy(png, file = "plot1.png", width = 480, height = 480)
+        ## Close PNG file
         dev.off()
 }
